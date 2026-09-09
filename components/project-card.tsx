@@ -18,8 +18,42 @@ export type ProjectData = {
   images: ProjectImage[];
 };
 
+const caseStudies: Record<string, { idea: string; implementation: string; features: string[] }> = {
+  "01": {
+    idea: "FreshRoute was created to simplify how fresh produce moves from multiple sellers to buyers. It brings product discovery, stock visibility, ordering, payment, and delivery into one connected experience for buyers, sellers, drivers, and administrators.",
+    implementation: "Shared REST APIs connect responsive React web and React Native mobile applications with a Node.js backend and PostgreSQL database. Inventory is reserved during checkout, seller-specific orders are created from a single cart, and delivery operations are supported through automated batching and route optimization.",
+    features: ["Multi-seller catalogue and price comparison", "Seller product, inventory, and low-stock management", "Cart, multi-step checkout, and Stripe payments", "Order tracking, notifications, ratings, and reviews", "Automated delivery batching and route optimization"],
+  },
+  "02": {
+    idea: "NexaBuild helps users move from an initial floor-plan idea to an explorable three-dimensional space. It combines the accuracy of a planning tool with a visual environment for testing room, interior, and garden layouts before construction.",
+    implementation: "The editor uses Next.js and React Three Fiber to translate user-created floor geometry into an interactive 3D scene. Project data is persisted in MongoDB so designs can be saved, reopened, and refined across planning sessions.",
+    features: ["Interactive floor-plan drawing", "Real-time 2D-to-3D visualization", "Interior, room, and garden editing", "Persistent project saving and editing", "Responsive design workspace"],
+  },
+  "03": {
+    idea: "Haven was designed as a private and supportive digital space for self-reflection, emotional awareness, and relaxation. It combines conversational assistance with practical tools that help users recognize mood patterns and pause during difficult moments.",
+    implementation: "Gemini AI powers context-aware conversations, while a Node.js and Express API stores mood entries, activity progress, and conversation history in MongoDB. Secure authentication and protected routes keep personal data separated, and the Next.js interface provides responsive light and dark experiences.",
+    features: ["Context-aware AI wellness conversations", "Mood history and personalized insights", "Seven calming and grounding exercises", "Secure authentication and protected routes", "Responsive light and dark modes"],
+  },
+  "04": {
+    idea: "AYA Fashion brings a Sri Lankan fashion and textile brand online through a modern customer storefront and a centralized operational system. It makes product discovery and purchasing simple while giving administrators dependable control over daily store management.",
+    implementation: "The React and TypeScript storefront communicates with Node.js and Express REST APIs backed by PostgreSQL and Prisma ORM. Relational models connect products, variants, customers, inventory, orders, and payment records, while a dedicated dashboard manages commerce data and promotional content.",
+    features: ["Catalogues, collections, search, and filtering", "Size and colour variants with stock availability", "Cart, wishlists, checkout, and customer accounts", "Admin product, inventory, and order management", "Collection and promotional-content management"],
+  },
+  "05": {
+    idea: "RythmoBot explores how embedded hardware and browser-based software can work together in a playful physical system. Built for a Microcontroller-Based System Design project, it performs choreographed movements synchronized with music and responds to its surroundings.",
+    implementation: "An ESP32 coordinates multiple servo motors through a PCA9685 controller to produce stepping, arm, head, forward, and backward movements. Sound and ultrasonic sensors provide clap and obstacle detection, while Wi-Fi and WebSockets carry real-time commands from the web controller.",
+    features: ["Music-synchronized dance sequences", "Multi-servo leg, arm, and head coordination", "Clap detection and obstacle awareness", "Web-based song selection and live control", "LED, I2C display, and buzzer feedback"],
+  },
+  "06": {
+    idea: "Hadathala translates the identity and anticipation of an annual university dance concert into a clear digital booking journey. Visitors can understand the event, explore the venue, compare ticket categories, and move confidently toward a reservation.",
+    implementation: "The responsive React interface presents event information, a visual seating plan, and clearly differentiated ticket tiers. Tailwind CSS supports consistent layouts across screen sizes, while Node.js and SQL provide the foundation for reservation and ticket-data workflows.",
+    features: ["Responsive concert landing experience", "Visual venue and seating plan", "Five clearly differentiated ticket tiers", "Pricing and booking calls to action", "Mobile-friendly reservation journey"],
+  },
+};
+
 export function ProjectCard({ project }: { project: ProjectData }) {
   const [open, setOpen] = useState(false);
+  const caseStudy = caseStudies[project.no];
 
   useEffect(() => {
     if (!open) return;
@@ -89,9 +123,21 @@ export function ProjectCard({ project }: { project: ProjectData }) {
         </header>
         <div className="project-modal-content">
           <article className="project-modal-overview">
-            <p className="project-modal-kicker">Overview</p>
-            <h3>About the project</h3>
-            <p>{project.details}</p>
+            <section>
+              <p className="project-modal-kicker">/ The idea</p>
+              <h3>Why it was built</h3>
+              <p>{caseStudy?.idea ?? project.details}</p>
+            </section>
+            <section>
+              <p className="project-modal-kicker">/ Implementation</p>
+              <h3>How it works</h3>
+              <p>{caseStudy?.implementation ?? project.details}</p>
+            </section>
+            <section>
+              <p className="project-modal-kicker">/ Key features</p>
+              <h3>What it delivers</h3>
+              <ul className="project-modal-feature-list">{caseStudy?.features.map((feature) => <li key={feature}>{feature}</li>)}</ul>
+            </section>
           </article>
           <aside className="project-modal-facts" aria-label="Project facts">
             <div><p className="project-modal-kicker">My contribution</p><strong>{project.role}</strong></div>
