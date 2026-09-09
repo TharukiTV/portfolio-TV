@@ -75,20 +75,32 @@ export function ProjectCard({ project }: { project: ProjectData }) {
     {open && <div className="project-modal-backdrop" onMouseDown={(event) => event.target === event.currentTarget && setOpen(false)}>
       <section className="project-modal" role="dialog" aria-modal="true" aria-labelledby={`project-modal-${project.no}`}>
         <button className="project-modal-close" type="button" onClick={() => setOpen(false)} aria-label="Close project details"><X /></button>
-        <div className="project-modal-copy">
-          <p className="section-label">{project.no} / Project details</p>
-          <h2 id={`project-modal-${project.no}`}>{project.title}</h2>
-          <p className="project-modal-summary">{project.text}</p>
-          <dl><div><dt>Role</dt><dd>{project.role}</dd></div><div><dt>Technology</dt><dd>{project.stack}</dd></div></dl>
+        <header className={`project-modal-hero ${project.tone}`}>
+          <div className="project-modal-heading">
+            <p className="section-label">{project.no} / Project case study</p>
+            <h2 id={`project-modal-${project.no}`}>{project.title}</h2>
+            <p className="project-modal-summary">{project.text}</p>
+          </div>
           <div className="project-modal-links">
             <a className="button secondary" href="https://github.com/TharukiTV" target="_blank" rel="noreferrer">GitHub <Github size={16} /></a>
             {project.liveUrl && <a className="button primary" href={project.liveUrl} target="_blank" rel="noreferrer">Live demo <ArrowUpRight size={16} /></a>}
           </div>
-        </div>
-        <div className={`project-modal-story ${project.tone}`}>
-          <span className="project-modal-story-number" aria-hidden="true">{project.no}</span>
-          <p>{project.details}</p>
-          <div className="project-modal-story-mark" aria-hidden="true"><i /><i /><i /><i /></div>
+          <span className="project-modal-hero-number" aria-hidden="true">{project.no}</span>
+        </header>
+        <div className="project-modal-content">
+          <article className="project-modal-overview">
+            <p className="project-modal-kicker">Overview</p>
+            <h3>About the project</h3>
+            <p>{project.details}</p>
+          </article>
+          <aside className="project-modal-facts" aria-label="Project facts">
+            <div><p className="project-modal-kicker">My contribution</p><strong>{project.role}</strong></div>
+            <div><p className="project-modal-kicker">Technologies</p><ul>{project.stack.split(" · ").map((technology) => <li key={technology}>{technology}</li>)}</ul></div>
+          </aside>
+          {project.images.length > 0 && <div className="project-modal-gallery">
+            <div><p className="project-modal-kicker">Interface</p><h3>Project gallery</h3><span>{project.images.length} {project.images.length === 1 ? "view" : "views"}</span></div>
+            <ProjectStage number={project.no} title={project.title} tone={project.tone} images={project.images} />
+          </div>}
         </div>
       </section>
     </div>}
