@@ -15,10 +15,16 @@ export type ProjectData = {
   stack: string;
   tone: string;
   liveUrl?: string;
+  githubUrl?: string;
   images: ProjectImage[];
 };
 
 const caseStudies: Record<string, { idea: string; implementation: string; features: string[] }> = {
+  "07": {
+    idea: "FixFlow brings maintenance reporting, staff review, and repair tracking into one workflow. Users report issues, administrators review and assign tickets, and technicians record the cause and resolution of completed repairs.",
+    implementation: "A React and TypeScript frontend connects to a Java Spring Boot API backed by PostgreSQL. Spring Security handles session authentication and role-based permissions. A separate Python FastAPI service validates optional Gemini suggestions for category, priority, and summary before human review. PostgreSQL full-text search helps technicians find similar resolved tickets assigned to them.",
+    features: ["Issue reporting, search, and status tracking", "Role-based access and technician assignment", "Optional Gemini classification with admin review", "Repair cause, resolution notes, and completion dates", "Search for similar past fixes using PostgreSQL"],
+  },
   "01": {
     idea: "FreshRoute was created to simplify how fresh produce moves from multiple sellers to buyers. It brings product discovery, stock visibility, ordering, payment, and delivery into one connected experience for buyers, sellers, drivers, and administrators.",
     implementation: "Shared REST APIs connect responsive React web and React Native mobile applications with a Node.js backend and PostgreSQL database. Inventory is reserved during checkout, seller-specific orders are created from a single cart, and delivery operations are supported through automated batching and route optimization.",
@@ -98,7 +104,7 @@ export function ProjectCard({ project }: { project: ProjectData }) {
         <p>{project.text}</p>
         <dl><div><dt>Role</dt><dd>{project.role}</dd></div><div><dt>Stack</dt><dd>{project.stack}</dd></div></dl>
         <div className="project-links">
-          <a href="https://github.com/TharukiTV" target="_blank" rel="noreferrer">GitHub <Github size={15} /></a>
+          <a href={project.githubUrl ?? "https://github.com/TharukiTV"} target="_blank" rel="noreferrer">GitHub <Github size={15} /></a>
           {project.liveUrl && <a href={project.liveUrl} target="_blank" rel="noreferrer">Live demo <ArrowUpRight size={15} /></a>}
           <button type="button" onClick={openDetails}>View details <ArrowUpRight size={15} /></button>
         </div>
@@ -116,7 +122,7 @@ export function ProjectCard({ project }: { project: ProjectData }) {
             <p className="project-modal-summary">{project.text}</p>
           </div>
           <div className="project-modal-links">
-            <a className="button secondary" href="https://github.com/TharukiTV" target="_blank" rel="noreferrer">GitHub <Github size={16} /></a>
+            <a className="button secondary" href={project.githubUrl ?? "https://github.com/TharukiTV"} target="_blank" rel="noreferrer">GitHub <Github size={16} /></a>
             {project.liveUrl && <a className="button primary" href={project.liveUrl} target="_blank" rel="noreferrer">Live demo <ArrowUpRight size={16} /></a>}
           </div>
           <span className="project-modal-hero-number" aria-hidden="true">{project.no}</span>

@@ -7,7 +7,7 @@ export function ProjectOverviewSwap({ projects }: { projects: ProjectData[] }) {
   return <div className="project-overview">
     <div className="project-overview-copy">
       <p className="section-label">A quick tour</p>
-      <h2>Six ideas.<br />One evolving practice.</h2>
+      <h2>{projects.length} ideas.<br />One evolving practice.</h2>
       <p>Move through the stack for a glimpse of each project, then continue below for the complete story.</p>
     </div>
     <div className="project-overview-stage">
